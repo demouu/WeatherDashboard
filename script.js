@@ -10,9 +10,9 @@ function callWeather() {
   $.ajax({
     url: queryURL,
     method: "GET"
-}).then(function (response) {
+  }).then(function (response) {
     console.log(response);
-    var fahrenheit = ((parseInt((response.main.temp) - 273.15) * 9/5 + 32)).toFixed();
+    var fahrenheit = ((parseInt((response.main.temp) - 273.15) * 9 / 5 + 32)).toFixed();
     console.log("temperature: " + fahrenheit);
     var humidity = response.main.humidity + "%";
     console.log("humidity: " + humidity);
@@ -24,17 +24,25 @@ function callWeather() {
     console.log(year);
     console.log(month);
     console.log(day);
+    var cardBody = $("<div>").addClass("card-body");
+    var cardTitle = $("<h3>").addClass("card-title").text(response.name + " " + month + "/" + day + "/" + year);
+    var cardTemp = $("<p>").text("Temperature: " + fahrenheit);
+    var cardHumidity = $("<p>").text("Humidity: " + humidity);
+    var cardWind = $("<p>").text("Wind Speed: " + wind);
+    $("#weather-append").append(cardBody, cardTitle, cardTemp, cardHumidity, cardWind);
     callUVIndex(response.coord.lat, response.coord.lon);
-})
+  })
 }
-function callUVIndex (lat, lon) {
+function callUVIndex(lat, lon) {
   var queryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=f08e0e7293a9c130de4d782ff1db313d"
   $.ajax({
     url: queryURL,
     method: "GET"
-  }).then(function (response){
+  }).then(function (response) {
     console.log(response);
     var uv = response.value;
     console.log(uv);
+    var cardUV = $("<p>").text("UV Index: " + uv);
+    $("#weather-append").append(cardUV);
   })
 }
