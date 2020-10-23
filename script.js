@@ -12,5 +12,13 @@ function callWeather() {
     method: "GET"
 }).then(function (response) {
     console.log(response);
+    var fahrenheit = ((parseFloat(response.main.temp) - 273.15) * 9/5 + 32).toFixed(2);
+    console.log(fahrenheit);
+    var year = new Date().getFullYear();
+    var month = new Date().getMonth() + 1;
+    var day = new Date().getDate();
+    console.log(year);
+    console.log(month);
+    console.log(day);
 })
 }
